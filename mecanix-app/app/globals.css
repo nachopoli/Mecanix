@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-blue: #113d87;
+  --brand-orange: #ee6a28;
+  --brand-dark: #1e1e1e;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  color: #1e1e1e;
+  background: #f4f6f9;
+  font-family: var(--font-montserrat), Montserrat, sans-serif;
+  overscroll-behavior: none;
+}
+
+/* Scrollbar thin */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-brand-blue text-white font-semibold rounded-xl px-5 min-h-[48px] flex items-center justify-center gap-2 transition-all active:scale-95 active:opacity-90 cursor-pointer;
+  }
+  .btn-primary-full {
+    @apply btn-primary w-full;
+  }
+  .btn-secondary {
+    @apply border-2 border-brand-blue text-brand-blue font-semibold rounded-xl px-5 min-h-[48px] flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer bg-white;
+  }
+  .btn-secondary-full {
+    @apply btn-secondary w-full;
+  }
+  .btn-orange {
+    @apply bg-brand-orange text-white font-semibold rounded-xl px-5 min-h-[48px] flex items-center justify-center gap-2 transition-all active:scale-95 active:opacity-90 cursor-pointer;
+  }
+  .btn-orange-full {
+    @apply btn-orange w-full;
+  }
+  .btn-ghost {
+    @apply text-gray-600 font-medium rounded-xl px-4 min-h-[44px] flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer hover:bg-gray-100;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-card p-4;
+  }
+  .card-sm {
+    @apply bg-white rounded-xl shadow-card p-3;
+  }
+  .input-field {
+    @apply w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all min-h-[48px];
+  }
+  .label {
+    @apply text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5 block;
+  }
+  .badge {
+    @apply text-xs font-semibold px-2.5 py-1 rounded-full;
+  }
+  .badge-pendiente {
+    @apply badge bg-amber-100 text-amber-700;
+  }
+  .badge-en-curso {
+    @apply badge bg-blue-100 text-blue-700;
+  }
+  .badge-finalizada {
+    @apply badge bg-green-100 text-green-700;
+  }
+  .badge-entregada {
+    @apply badge bg-purple-100 text-purple-700;
+  }
+  .badge-cancelada {
+    @apply badge bg-red-100 text-red-700;
+  }
+  .badge-programada {
+    @apply badge bg-indigo-100 text-indigo-700;
+  }
+  .badge-aprobado {
+    @apply badge bg-green-100 text-green-700;
+  }
+  .badge-enviado {
+    @apply badge bg-blue-100 text-blue-700;
+  }
+  .badge-borrador {
+    @apply badge bg-gray-100 text-gray-600;
+  }
+  .badge-rechazado {
+    @apply badge bg-red-100 text-red-700;
+  }
+  .badge-vencido {
+    @apply badge bg-orange-100 text-orange-700;
+  }
+  .section-title {
+    @apply text-xs font-bold text-gray-500 uppercase tracking-widest mb-3;
+  }
+  .fab {
+    @apply fixed bottom-24 right-4 w-14 h-14 bg-brand-orange text-white rounded-full shadow-card-md flex items-center justify-center z-40 active:scale-95 transition-all;
+  }
+  .page-wrapper {
+    @apply max-w-[430px] mx-auto min-h-screen bg-[#f4f6f9];
+  }
+}

@@ -1,0 +1,32 @@
+# Next.js
+mecanix-app/.next/
+mecanix-app/out/
+mecanix-app/build/
+
+# Dependencies
+mecanix-app/node_modules/
+
+# Environment variables
+mecanix-app/.env
+mecanix-app/.env.local
+mecanix-app/.env.development.local
+mecanix-app/.env.test.local
+mecanix-app/.env.production.local
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Claude Code internal data
+.claude/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
