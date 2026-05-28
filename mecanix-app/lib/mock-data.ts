@@ -81,6 +81,7 @@ export interface Presupuesto {
   items: ItemPresupuesto[]
   total: number
   otId?: string
+  peritajeId?: string
   notas?: string
 }
 
@@ -126,6 +127,7 @@ export const clientes: Cliente[] = [
   { id: 'c3', nombre: 'Lucas Gómez', telefono: '11-6678-9901', mail: 'lgomez@gmail.com', direccion: 'Mitre 340, Lanús', etiqueta: 'Nuevo', origen: 'Instagram', deudaPendiente: 0, fechaUltimaVisita: '2025-05-22' },
   { id: 'c4', nombre: 'Juan Rodríguez', telefono: '11-7823-4456', mail: 'jrodriguez@yahoo.com', direccion: 'Belgrano 1120, Quilmes', cuit: '20-18765432-1', etiqueta: 'Regular', origen: 'Referido', deudaPendiente: 120000, fechaUltimaVisita: '2025-04-30' },
   { id: 'c5', nombre: 'Sebastián Martínez', telefono: '11-9912-3345', mail: 'sebas.m@gmail.com', direccion: 'Rivadavia 2200, Lomas de Zamora', cuit: '20-30123456-7', etiqueta: 'VIP', origen: 'Presencial', deudaPendiente: 0, fechaUltimaVisita: '2025-05-24' },
+  { id: 'c6', nombre: 'Juan Pérez', telefono: '11-4456-7890', mail: 'jperez@gmail.com', direccion: 'Av. Rivadavia 3540, Flores', etiqueta: 'Nuevo', origen: 'Instagram', deudaPendiente: 0, fechaUltimaVisita: '2025-05-26' },
 ]
 
 export const vehiculos: Vehiculo[] = [
@@ -136,6 +138,7 @@ export const vehiculos: Vehiculo[] = [
   { id: 'v5', clienteId: 'c4', marca: 'Ford', modelo: 'Ranger', version: 'XLS 2.2 TDi 4x2', año: 2020, patente: 'EJ345AS', km: 65000, color: 'Plateado', combustible: 'Diesel' },
   { id: 'v6', clienteId: 'c5', marca: 'Fiat', modelo: 'Cronos', version: '1.3 Drive GSE', año: 2023, patente: 'FK678DF', km: 15000, color: 'Azul', combustible: 'Nafta' },
   { id: 'v7', clienteId: 'c2', marca: 'Chevrolet', modelo: 'S10', version: 'LTZ 2.8 4x4', año: 2018, patente: 'GL901GH', km: 93000, color: 'Blanco', combustible: 'Diesel' },
+  { id: 'v8', clienteId: 'c6', marca: 'Volkswagen', modelo: 'Gol', version: 'Trend 1.6 MSI', año: 2019, patente: 'ABC123', km: 67000, color: 'Gris', combustible: 'Nafta' },
 ]
 
 export const ordenesDeTrabajoMock: OT[] = [
@@ -146,6 +149,7 @@ export const ordenesDeTrabajoMock: OT[] = [
   { id: 'ot5', numero: 'OT-0244', vehiculoId: 'v6', clienteId: 'c5', tecnicoId: 't1', estado: 'programada', descripcion: 'Service de los 15.000 km y alineación', fechaIngreso: '2025-05-25', fechaEstimada: '2025-05-26', prioridad: 'normal', manoDeObra: 15000, repuestos: 22000, total: 37000 },
   { id: 'ot6', numero: 'OT-0239', vehiculoId: 'v2', clienteId: 'c1', tecnicoId: 't2', estado: 'entregada', descripcion: 'Cambio de correa de distribución', fechaIngreso: '2025-05-15', fechaEstimada: '2025-05-17', prioridad: 'alta', manoDeObra: 30000, repuestos: 55000, total: 85000 },
   { id: 'ot7', numero: 'OT-0245', vehiculoId: 'v7', clienteId: 'c2', tecnicoId: 't3', estado: 'pausada', descripcion: 'Reparación caja de cambios — esperando repuesto', fechaIngreso: '2025-05-21', fechaEstimada: '2025-05-30', prioridad: 'alta', manoDeObra: 45000, repuestos: 75000, total: 120000, notas: 'Esperando sincronizadores del proveedor' },
+  { id: 'ot8', numero: 'OT-0246', vehiculoId: 'v8', clienteId: 'c6', tecnicoId: 't1', estado: 'en-curso', descripcion: 'Service completo: aceite, filtros, correa de distribución y bomba de agua', fechaIngreso: '2025-05-26', fechaEstimada: '2025-05-30', prioridad: 'alta', manoDeObra: 40000, repuestos: 96800, total: 136800, presupuestoId: 'p5', peritajeId: 'per3' },
 ]
 
 export const presupuestosMock: Presupuesto[] = [
@@ -186,6 +190,21 @@ export const presupuestosMock: Presupuesto[] = [
     ],
     total: 50000,
   },
+  {
+    id: 'p5', numero: 'PRE-0092', vehiculoId: 'v8', clienteId: 'c6', estado: 'aprobado',
+    fecha: '2025-05-26', vencimiento: '2025-06-02', peritajeId: 'per3',
+    items: [
+      { id: 'p5-i1', descripcion: 'Aceite sintético 5W30 5L', tipo: 'repuesto', cantidad: 1, precioUnitario: 11200, total: 11200 },
+      { id: 'p5-i2', descripcion: 'Filtro aceite original', tipo: 'repuesto', cantidad: 1, precioUnitario: 4500, total: 4500 },
+      { id: 'p5-i3', descripcion: 'Filtro aire original', tipo: 'repuesto', cantidad: 1, precioUnitario: 3800, total: 3800 },
+      { id: 'p5-i4', descripcion: 'Kit correa de distribución completo', tipo: 'repuesto', cantidad: 1, precioUnitario: 52500, total: 52500 },
+      { id: 'p5-i5', descripcion: 'Bomba de agua', tipo: 'repuesto', cantidad: 1, precioUnitario: 24800, total: 24800 },
+      { id: 'p5-i6', descripcion: 'Mano de obra service completo', tipo: 'mano-de-obra', cantidad: 1, precioUnitario: 18000, total: 18000 },
+      { id: 'p5-i7', descripcion: 'Mano de obra distribución y bomba', tipo: 'mano-de-obra', cantidad: 1, precioUnitario: 22000, total: 22000 },
+    ],
+    total: 136800,
+    notas: 'Incluye mano de obra y repuestos. Garantía 3 meses / 5.000 km.',
+  },
 ]
 
 export const turnosMock: Turno[] = [
@@ -225,6 +244,33 @@ export const peritajesMock: Peritaje[] = [
     trabajosSugeridos: ['Cambio de aceite y filtro', 'Revisión y recarga sistema de refrigeración', 'Cambio de escobillas', 'Revisión manguera superior radiador'],
     estado: 'finalizado',
     otId: 'ot1',
+  },
+  {
+    id: 'per3',
+    numero: 'PER-0043',
+    vehiculoId: 'v8',
+    clienteId: 'c6',
+    tecnicoId: 't1',
+    fecha: '2025-05-26',
+    checklist: {
+      frenos: 'ok',
+      aceite: 'urgente',
+      filtro_aceite: 'urgente',
+      filtro_aire: 'revisar',
+      suspension: 'ok',
+      neumaticos: 'revisar',
+      luces: 'ok',
+      bateria: 'ok',
+      refrigeracion: 'revisar',
+      escobillas: 'ok',
+      direccion: 'ok',
+      escape: 'ok',
+    },
+    diagnostico: 'Aceite con más de 25.000 km de uso, color negro y viscosidad baja. Filtro de aceite totalmente colmatado. Filtro de aire sucio. Neumáticos con desgaste irregular, presión baja. Refrigeración con nivel bajo. Correa de distribución presenta desgaste visible. Se recomienda intervención urgente de motor.',
+    trabajosSugeridos: ['Cambio de aceite y filtro de aceite', 'Cambio de filtro de aire', 'Kit correa de distribución + bomba de agua', 'Alineación y balanceo', 'Revisión sistema de refrigeración'],
+    estado: 'finalizado',
+    presupuestoId: 'p5',
+    otId: 'ot8',
   },
   {
     id: 'per2',
