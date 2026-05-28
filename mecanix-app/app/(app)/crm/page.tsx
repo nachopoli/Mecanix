@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Search, Plus, Phone, MessageCircle, ChevronRight, Car, AlertCircle, Star } from 'lucide-react'
 import { clientes, vehiculos, getVehiculosByCliente } from '@/lib/mock-data'
 import { cn } from '@/lib/utils'
@@ -21,7 +22,6 @@ function getInitials(nombre: string) {
 export default function CRMPage() {
   const [tab, setTab] = useState<Tab>('clientes')
   const [search, setSearch] = useState('')
-  const [showNuevoCliente, setShowNuevoCliente] = useState(false)
 
   const clientesFiltrados = clientes.filter(c =>
     `${c.nombre} ${c.telefono} ${c.mail}`.toLowerCase().includes(search.toLowerCase())
@@ -76,13 +76,13 @@ export default function CRMPage() {
               ? `${clientesFiltrados.length} cliente${clientesFiltrados.length !== 1 ? 's' : ''}`
               : `${vehiculosFiltrados.length} vehículo${vehiculosFiltrados.length !== 1 ? 's' : ''}`}
           </p>
-          <button
-            onClick={() => setShowNuevoCliente(true)}
+          <Link
+            href={tab === 'clientes' ? '/clientes/nuevo' : '/vehiculos/nuevo'}
             className="flex items-center gap-1.5 bg-[#113d87] text-white text-xs font-semibold px-3 py-2 rounded-xl active:scale-95 transition-all"
           >
             <Plus className="w-3.5 h-3.5" />
             {tab === 'clientes' ? 'Nuevo cliente' : 'Nuevo vehículo'}
-          </button>
+          </Link>
         </div>
 
         {/* Clientes list */}
@@ -159,18 +159,18 @@ export default function CRMPage() {
 
                   {/* Actions */}
                   <div className="flex gap-2">
-                    <button className="flex-1 flex items-center justify-center gap-1.5 border border-gray-200 rounded-xl py-2 text-xs font-semibold text-gray-600 active:scale-95 transition-all hover:bg-gray-50">
+                    <a href={`tel:${cliente.telefono}`} className="flex-1 flex items-center justify-center gap-1.5 border border-gray-200 rounded-xl py-2 text-xs font-semibold text-gray-600 active:scale-95 transition-all hover:bg-gray-50">
                       <Phone className="w-3.5 h-3.5" />
                       Llamar
-                    </button>
-                    <button className="flex-1 flex items-center justify-center gap-1.5 border border-gray-200 rounded-xl py-2 text-xs font-semibold text-gray-600 active:scale-95 transition-all hover:bg-gray-50">
+                    </a>
+                    <a href={`https://wa.me/549${cliente.telefono.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 border border-gray-200 rounded-xl py-2 text-xs font-semibold text-gray-600 active:scale-95 transition-all hover:bg-gray-50">
                       <MessageCircle className="w-3.5 h-3.5" />
                       WhatsApp
-                    </button>
-                    <button className="flex-1 flex items-center justify-center gap-1.5 bg-[#e6ecf7] rounded-xl py-2 text-xs font-semibold text-[#113d87] active:scale-95 transition-all">
+                    </a>
+                    <Link href={`/clientes/${cliente.id}`} className="flex-1 flex items-center justify-center gap-1.5 bg-[#e6ecf7] rounded-xl py-2 text-xs font-semibold text-[#113d87] active:scale-95 transition-all">
                       Ver ficha
                       <ChevronRight className="w-3 h-3" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               )
@@ -223,15 +223,15 @@ export default function CRMPage() {
                   </div>
 
                   <div className="flex gap-2">
-                    <button className="flex-1 flex items-center justify-center gap-1.5 bg-[#e6ecf7] rounded-xl py-2 text-xs font-semibold text-[#113d87] active:scale-95 transition-all">
+                    <Link href={`/peritajes/nuevo?vehiculoId=${v.id}`} className="flex-1 flex items-center justify-center gap-1.5 bg-[#e6ecf7] rounded-xl py-2 text-xs font-semibold text-[#113d87] active:scale-95 transition-all">
                       Peritaje
-                    </button>
-                    <button className="flex-1 flex items-center justify-center gap-1.5 bg-[#fde8dc] rounded-xl py-2 text-xs font-semibold text-[#ee6a28] active:scale-95 transition-all">
+                    </Link>
+                    <Link href={`/presupuestos/nuevo?vehiculoId=${v.id}`} className="flex-1 flex items-center justify-center gap-1.5 bg-[#fde8dc] rounded-xl py-2 text-xs font-semibold text-[#ee6a28] active:scale-95 transition-all">
                       Presupuesto
-                    </button>
-                    <button className="flex-1 flex items-center justify-center gap-1.5 border border-gray-200 rounded-xl py-2 text-xs font-semibold text-gray-600 active:scale-95 transition-all">
+                    </Link>
+                    <Link href={`/vehiculos/${v.id}`} className="flex-1 flex items-center justify-center gap-1.5 border border-gray-200 rounded-xl py-2 text-xs font-semibold text-gray-600 active:scale-95 transition-all">
                       Historial
-                    </button>
+                    </Link>
                   </div>
                 </div>
               )
@@ -241,86 +241,6 @@ export default function CRMPage() {
 
       </div>
 
-      {/* Nuevo cliente modal */}
-      {showNuevoCliente && (
-        <div
-          className="fixed inset-0 bg-black/40 z-50 flex items-end md:items-center justify-center"
-          onClick={() => setShowNuevoCliente(false)}
-        >
-          <div
-            className="bg-white w-full max-w-md rounded-t-3xl md:rounded-3xl p-6 shadow-2xl"
-            onClick={e => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between mb-5">
-              <h3 className="text-lg font-bold text-[#1e1e1e]">
-                {tab === 'clientes' ? 'Nuevo cliente' : 'Nuevo vehículo'}
-              </h3>
-              <button onClick={() => setShowNuevoCliente(false)} className="text-gray-400 text-2xl leading-none">×</button>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              {tab === 'clientes' ? (
-                <>
-                  <div>
-                    <label className="label">Nombre y apellido *</label>
-                    <input type="text" placeholder="Ej: Carlos Fernández" className="input-field" />
-                  </div>
-                  <div>
-                    <label className="label">Teléfono</label>
-                    <input type="tel" placeholder="Ej: 11-4500-1234" className="input-field" />
-                  </div>
-                  <div>
-                    <label className="label">Email</label>
-                    <input type="email" placeholder="correo@mail.com" className="input-field" />
-                  </div>
-                  <div>
-                    <label className="label">Origen</label>
-                    <select className="input-field">
-                      <option>Referido</option>
-                      <option>Google</option>
-                      <option>Instagram</option>
-                      <option>Presencial</option>
-                      <option>WhatsApp</option>
-                    </select>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div>
-                    <label className="label">Marca *</label>
-                    <input type="text" placeholder="Ej: Toyota" className="input-field" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="label">Modelo *</label>
-                      <input type="text" placeholder="Hilux" className="input-field" />
-                    </div>
-                    <div>
-                      <label className="label">Año</label>
-                      <input type="number" placeholder="2020" className="input-field" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="label">Patente *</label>
-                    <input type="text" placeholder="AE123FG" className="input-field uppercase" />
-                  </div>
-                  <div>
-                    <label className="label">Km actuales</label>
-                    <input type="number" placeholder="85000" className="input-field" />
-                  </div>
-                </>
-              )}
-
-              <button
-                onClick={() => setShowNuevoCliente(false)}
-                className="btn-primary-full mt-1"
-              >
-                Guardar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   )

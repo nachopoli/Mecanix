@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import {
   Plus, Wrench, FileText, Mic, AlertTriangle,
   Calendar, MoreVertical, Clipboard
@@ -133,7 +134,6 @@ function OTCard({ ot }: { ot: OT }) {
 
 export default function OperacionesPage() {
   const [tab, setTab] = useState<TabOp>('ot')
-  const [showNuevaOT, setShowNuevaOT] = useState(false)
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({})
   const [diagnostico, setDiagnostico] = useState('')
   const [isRecording, setIsRecording] = useState(false)
@@ -205,7 +205,11 @@ export default function OperacionesPage() {
                           <p className="text-xs text-gray-300 font-semibold">Sin OT</p>
                         </div>
                       ) : (
-                        ots.map(ot => <OTCard key={ot.id} ot={ot} />)
+                        ots.map(ot => (
+                          <Link key={ot.id} href={`/operaciones/${ot.id}`} className="block">
+                            <OTCard ot={ot} />
+                          </Link>
+                        ))
                       )}
                     </div>
                   </div>
@@ -215,13 +219,9 @@ export default function OperacionesPage() {
           </div>
 
           {/* FAB */}
-          <button
-            onClick={() => setShowNuevaOT(true)}
-            className="fab"
-            aria-label="Nueva OT"
-          >
+          <Link href="/operaciones/nueva" className="fab" aria-label="Nueva OT">
             <Plus className="w-6 h-6" />
-          </button>
+          </Link>
         </div>
       )}
 
@@ -230,10 +230,10 @@ export default function OperacionesPage() {
         <div className="flex-1 overflow-y-auto px-4 py-4">
           <div className="flex items-center justify-between mb-4">
             <p className="text-xs font-semibold text-gray-400">{presupuestosMock.length} presupuestos</p>
-            <button className="flex items-center gap-1.5 bg-[#113d87] text-white text-xs font-semibold px-3 py-2 rounded-xl active:scale-95 transition-all">
+            <Link href="/presupuestos/nuevo" className="flex items-center gap-1.5 bg-[#113d87] text-white text-xs font-semibold px-3 py-2 rounded-xl active:scale-95 transition-all">
               <Plus className="w-3.5 h-3.5" />
               Nuevo presupuesto
-            </button>
+            </Link>
           </div>
 
           <div className="flex flex-col gap-2.5">
@@ -424,63 +424,6 @@ export default function OperacionesPage() {
         </div>
       )}
 
-      {/* Nueva OT Modal */}
-      {showNuevaOT && (
-        <div className="fixed inset-0 bg-black/40 z-50 flex items-end md:items-center justify-center" onClick={() => setShowNuevaOT(false)}>
-          <div className="bg-white w-full max-w-md rounded-t-3xl md:rounded-3xl p-6 shadow-2xl max-h-[85vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-5">
-              <h3 className="text-lg font-bold text-[#1e1e1e]">Nueva orden de trabajo</h3>
-              <button onClick={() => setShowNuevaOT(false)} className="text-gray-400 text-2xl leading-none">×</button>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <div>
-                <label className="label">Cliente *</label>
-                <input type="text" placeholder="Buscar cliente..." className="input-field" />
-              </div>
-              <div>
-                <label className="label">Vehículo *</label>
-                <select className="input-field">
-                  <option>Seleccionar vehículo...</option>
-                </select>
-              </div>
-              <div>
-                <label className="label">Descripción del trabajo</label>
-                <textarea
-                  placeholder="Describí el trabajo a realizar..."
-                  className="input-field resize-none"
-                  rows={3}
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="label">Técnico asignado</label>
-                  <select className="input-field">
-                    <option>Roberto Díaz</option>
-                    <option>Pablo Sánchez</option>
-                    <option>Nicolás Torres</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="label">Prioridad</label>
-                  <select className="input-field">
-                    <option>Normal</option>
-                    <option>Alta</option>
-                    <option>Urgente</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label className="label">Fecha estimada de entrega</label>
-                <input type="date" className="input-field" />
-              </div>
-              <button onClick={() => setShowNuevaOT(false)} className="btn-primary-full mt-1">
-                Crear orden de trabajo
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
