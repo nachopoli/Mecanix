@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd mecanix-app && npm run build",
+  "outputDirectory": "mecanix-app/.next",
+  "framework": "nextjs",
+  "installCommand": "cd mecanix-app && npm install"
+}
