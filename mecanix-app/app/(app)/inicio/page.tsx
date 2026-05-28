@@ -45,10 +45,10 @@ export default function InicioPage() {
   ]
 
   const acciones = [
-    { label: 'Nuevo cliente', icon: UserPlus, href: '/crm', color: '#113d87', bg: '#e6ecf7' },
-    { label: 'Nuevo presupuesto', icon: FilePlus, href: '/operaciones', color: '#ee6a28', bg: '#fde8dc' },
-    { label: 'Nueva OT', icon: ClipboardPlus, href: '/operaciones', color: '#8b5cf6', bg: '#ede9fe' },
-    { label: 'Nuevo turno', icon: CalendarPlus, href: '/agenda', color: '#10b981', bg: '#d1fae5' },
+    { label: 'Nuevo cliente', icon: UserPlus, href: '/clientes/nuevo', color: '#113d87', bg: '#e6ecf7' },
+    { label: 'Nuevo presupuesto', icon: FilePlus, href: '/presupuestos/nuevo', color: '#ee6a28', bg: '#fde8dc' },
+    { label: 'Nueva OT', icon: ClipboardPlus, href: '/operaciones/nueva', color: '#8b5cf6', bg: '#ede9fe' },
+    { label: 'Nuevo turno', icon: CalendarPlus, href: '/turnos/nuevo', color: '#10b981', bg: '#d1fae5' },
   ]
 
   const estadoTurnoColor: Record<string, string> = {
@@ -160,7 +160,7 @@ export default function InicioPage() {
             const cliente = getMockCliente(t.clienteId)
             const vehiculo = getMockVehiculo(t.vehiculoId)
             return (
-              <div key={t.id} className="bg-white rounded-2xl shadow-card p-4 flex items-center gap-3">
+              <Link key={t.id} href={`/turnos/${t.id}`} className="bg-white rounded-2xl shadow-card p-4 flex items-center gap-3">
                 <div className="flex flex-col items-center w-12 shrink-0">
                   <span className="text-sm font-bold text-[#113d87]">{t.hora}</span>
                   <span className="text-[10px] text-gray-400 font-medium">{t.duracion}min</span>
@@ -178,7 +178,7 @@ export default function InicioPage() {
                 )}>
                   {t.estado === 'confirmado' ? 'Confirmado' : t.estado === 'agendado' ? 'Agendado' : 'Pendiente'}
                 </span>
-              </div>
+              </Link>
             )
           })}
         </div>
@@ -198,7 +198,7 @@ export default function InicioPage() {
             const cliente = getMockCliente(ot.clienteId)
             const vehiculo = getMockVehiculo(ot.vehiculoId)
             return (
-              <Link key={ot.id} href="/operaciones" className="bg-white rounded-2xl shadow-card p-4 flex items-center gap-3 active:scale-[0.98] transition-transform">
+              <Link key={ot.id} href={`/operaciones/${ot.id}`} className="bg-white rounded-2xl shadow-card p-4 flex items-center gap-3 active:scale-[0.98] transition-transform">
                 <div className="w-10 h-10 bg-[#e6ecf7] rounded-xl flex items-center justify-center shrink-0">
                   <Wrench className="w-[18px] h-[18px] text-[#113d87]" />
                 </div>

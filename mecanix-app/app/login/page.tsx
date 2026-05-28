@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Eye, EyeOff, Wrench, Lock, Mail, HeadphonesIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -128,6 +129,12 @@ export default function LoginPage() {
 
       {/* Footer */}
       <div className="pb-10 text-center px-5">
+        <p className="text-blue-200/70 text-sm mb-4">
+          ¿No tenés cuenta?{' '}
+          <Link href="/registro" className="text-white font-bold hover:underline">
+            Registrarte gratis
+          </Link>
+        </p>
         <button className="flex items-center gap-1.5 mx-auto text-blue-300/80 text-xs font-medium hover:text-blue-200 transition-colors">
           <HeadphonesIcon className="w-3.5 h-3.5" />
           Contactar soporte
