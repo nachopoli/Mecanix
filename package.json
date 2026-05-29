@@ -1,0 +1,12 @@
+{
+  "name": "mecanix",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "next": "14.2.35"
+  },
+  "scripts": {
+    "build": "cd mecanix-app && npm install && npm run build",
+    "dev": "cd mecanix-app && npm run dev"
+  }
+}
